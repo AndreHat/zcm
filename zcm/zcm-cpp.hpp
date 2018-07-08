@@ -110,8 +110,10 @@ class ZCM
     virtual inline void unsubscribeRaw(void*& rawSub);
 
   private:
+    inline ZCM(zcm_t* zcm);
     zcm_t* zcm;
     std::vector<Subscription*> subscriptions;
+    friend class ZCMServer;
 };
 
 // New class required to allow the Handler callbacks and std::string channel names
