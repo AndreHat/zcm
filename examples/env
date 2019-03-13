@@ -39,7 +39,7 @@ checkJuliaInstall()
 checkJuliaInstall
 ret=$?
 if [ $ret -ne 0 ]; then
-    export PATH=$PATH:$ROOTDIR/deps/julia-9d11f62bcb/bin
+    export PATH=$PATH:$ROOTDIR/deps/julia-1.0.3/bin
     checkJuliaInstall
     ret=$?
     if [ $ret -ne 0 ]; then echo "Unable to find julia"; fi
