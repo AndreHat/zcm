@@ -8,6 +8,7 @@
 
 #ifndef ZCM_EMBEDDED
 #include "zcm/eventlog.h"
+#include "zcm/server.h"
 #endif
 
 #if __cplusplus > 199711L
@@ -109,8 +110,10 @@ class ZCM
     virtual inline void unsubscribeRaw(void*& rawSub);
 
   private:
+    inline ZCM(zcm_t* zcm);
     zcm_t* zcm;
     std::vector<Subscription*> subscriptions;
+    friend class ZCMServer;
 };
 
 // New class required to allow the Handler callbacks and std::string channel names
@@ -136,7 +139,20 @@ class Subscription
     { ((Subscription*)usr)->dispatch(rbuf, channel); }
 };
 
-// TODO: why not use or inherit from the existing zcm data structures for the below
+
+class ZCMServer
+{
+public:
+    inline ZCMServer(const std::string& url);
+    inline ~ZCMServer();
+    inline bool good() const;
+    inline ZCM accept(int timeout);
+
+private:
+    zcm_server_t *svr;
+};
+
+// TODO: why not use or inherrit from the existing zcm data structures for the below
 
 #ifndef ZCM_EMBEDDED
 struct LogEvent
